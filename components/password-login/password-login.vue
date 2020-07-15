@@ -85,6 +85,7 @@
 						// 本站用户登录成功, 存储用户信息,登录状态,返回之前页面
 						let userinfo = res.data;
 						this.$u.vuex('vuex_user', userinfo);
+						this.$u.vuex('vuex_user.auth_type', this.auth_type);
 						this.$u.vuex('vuex_login_type', 1);
 						this.$u.route({
 							type: 'navigateBack'

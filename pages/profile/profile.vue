@@ -12,10 +12,10 @@
 					<text class="item-title">{{item.title}}</text>
 				</view>
 			</block>
-		</view> 		
+		</view> 
 		<!-- 宫格 -->
 		<grid class="grid"></grid>
-		
+
 		<!-- 广告位 -->
 		<view class="ad">广告位</view>
 		<template v-if="vuex_login_type==0">
@@ -23,18 +23,19 @@
 			<u-button @click="tapReg" type="error" :custom-style="btnStyle">注册</u-button>
 		</template>
 		<template v-else-if="vuex_login_type==1">
-			<u-button @click="tapLogout" type="warning" :custom-style="btnStyle">注销</u-button> 
+			<u-button @click="tapLogout" type="warning" :custom-style="btnStyle">注销</u-button>
 		</template>
 		<template v-else>
 			<u-button @click="tapLogout" type="warning" :custom-style="btnStyle">注销</u-button>
 			<u-button @click="tapReg" type="error" :custom-style="btnStyle">注册</u-button>
 		</template>
-		
-			
+
+		<button @click="test">测试</button>
 	</view>
 </template>
 
 <script>
+	import debounce from 'common/debounce.js';
 	export default {
 		data() {
 			return {
@@ -79,13 +80,15 @@
 				this.$u.route({
 					url: '/pages/reg/reg'
 				})
-			}
+			},
+			test: debounce(()=>{
+				console.log(5)
+			}, 5000)
 		}
 	}
 </script>
 
 <style scoped>
-	
 	.profile {
 		display: flex;
 		flex-direction: column;
@@ -127,15 +130,18 @@
 	.item-title {
 		color: #999999;
 	}
-	
-	.logout, .login {
+
+	.logout,
+	.login {
 		width: 100rpx;
 	}
-	.grid{
-		margin: 30rpx 0;
+
+	.grid {
+		padding: 30rpx 0;
 	}
-	.ad{
-		flex:1 0 150rpx;
+
+	.ad {
+		flex: 1 0 150rpx;
 		background-color: rgba(7, 249, 197, 0.6);
 		display: flex;
 		justify-content: center;

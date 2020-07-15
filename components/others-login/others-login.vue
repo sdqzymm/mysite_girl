@@ -2,7 +2,7 @@
 	<view>
 		<scroll-view scroll-x="true" class="others">
 			<block v-for="(item, index) in providerList" :key="index">
-				<u-icon class="login" :name="item.icon" :custom-style="{backgroundColor: item.bgColor}" @tap="tologin(item)"></u-icon>
+				<u-icon class="login" :name="item.icon" :custom-style="{backgroundColor: item.bgColor}" @click="tologin(item)"></u-icon>
 			</block>
 		</scroll-view>
 		<u-toast ref="uToast" />
@@ -64,7 +64,7 @@
 					// #endif
 					success: (res) => {
 						let auth_type = ''
-						switch (res.id) {
+						switch (provider.id) {
 							case 'weixin':
 								auth_type = 3;
 								break;
@@ -88,10 +88,11 @@
 									gender: userinfo.gender,
 									city: userinfo.city,
 									province: userinfo.province,
+									auth_type: auth_type
 								}
 								// 向本站服务器发送登录请求
 								this.$u.api.login({
-									auth_type: 4,
+									auth_type: auth_type,
 									open_id: res.authResult.openid
 								}).then(res => {
 									if (res.code == 10110) {
@@ -111,7 +112,7 @@
 										})
 									}
 								}).catch(err => {
-									console.log(err)
+									
 								})
 							}
 						})

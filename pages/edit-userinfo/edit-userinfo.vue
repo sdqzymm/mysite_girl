@@ -101,7 +101,7 @@
 			submit() {
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						let formData = {
+						let params = {
 							name: this.form.name,
 							nickname: this.form.nickname,
 							signature: this.form.signature,
@@ -110,8 +110,14 @@
 							auth_type: 0,
 							app_key: this.vuex_user.app_key
 						}
-						let lifeData = uni.getStorageSync('lifeData');
-						console.log(lifeData, typeof lifeData, lifeData.vuex_user);
+						// 上传修改信息
+						this.$u.api.editProfile(params);
+						// 上传头像(单独发送是因为上传功能不会走请求拦截,响应)
+						let lifeData = uni.getStorageSync('lifeData').then(res=>{
+							console.log(res);
+						}).catch(err=>{
+							console.log(err);
+						})
 						let access_token = lifeData.vuex_user.access_token;
 						uni.uploadFile({
 							'url': 'http://192.168.3.20:8000/api/account/v1/profile/',
@@ -121,8 +127,11 @@
 								'Authorization': `Token ${access_token}`
 							},
 							filePath: this.avatar,
-							formData: formData,
+							formData: params,
 							success: (uploadFileRes) => {
+								if(uploadFileRes.statusCode == 200) {
+									console.log(uploadFileRes)
+								}
 								console.log(uploadFileRes);
 							},
 							fail:(err)=>{
