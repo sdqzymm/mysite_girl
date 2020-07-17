@@ -38,6 +38,7 @@
 </template>
 
 <script>
+	import debounce from 'common/debounce.js';
 	export default {
 		data() {
 			return {
@@ -86,6 +87,7 @@
 			}
 		},
 		onReady() {
+			this.avatar = this.vuex_user.avatar_;
 			// form表单提交验证规则
 			this.$refs.uForm.setRules(this.rules);
 			this.nowYear = new Date().getFullYear();
@@ -93,57 +95,34 @@
 		onNavigationBarButtonTap(e) {
 			if (e.index == 0) {
 				// 发送请求, 修改用户信息, 请求成功更新本地信息
-				this.submit()
+				this.handleSubmit();
 			}
 		},
 		methods: {
+			handleSubmit() {
+				this.submit(this);
+			},
 			// 提交保存
-			submit() {
-				this.$refs.uForm.validate(valid => {
+			submit: debounce((that) => {
+				that.$refs.uForm.validate(valid => {
 					if (valid) {
 						let params = {
-							name: this.form.name,
-							nickname: this.form.nickname,
-							signature: this.form.signature,
-							birthday: this.birthday,
-							gender: this.gender,
-							auth_type: 0,
-							app_key: this.vuex_user.app_key
-						}
+							name: that.form.name,
+							nickname: that.form.nickname,
+							signature: that.form.signature,
+							birthday: that.birthday,
+							gender: that.gender,
+						};
 						// 上传修改信息
-						this.$u.api.editProfile(params);
-						// 上传头像(单独发送是因为上传功能不会走请求拦截,响应)
-						let lifeData = uni.getStorageSync('lifeData').then(res=>{
-							console.log(res);
-						}).catch(err=>{
-							console.log(err);
-						})
-						let access_token = lifeData.vuex_user.access_token;
-						uni.uploadFile({
-							'url': 'http://192.168.3.20:8000/api/account/v1/profile/',
-							'fileType': 'image',
-							name: 'avatar',
-							header: {
-								'Authorization': `Token ${access_token}`
-							},
-							filePath: this.avatar,
-							formData: params,
-							success: (uploadFileRes) => {
-								if(uploadFileRes.statusCode == 200) {
-									console.log(uploadFileRes)
-								}
-								console.log(uploadFileRes);
-							},
-							fail:(err)=>{
-								console.log(err)
-							}
-						})
-						
+						that.$u.api.editProfile(that.avatar, params);
 					} else {
 						console.log('验证失败');
 					}
 				});
-			},
+			}, 1000 * 5, {
+				leading: true,
+				trailing: false
+			}), // 防抖5秒立即发送
 			// 处理头像
 			handleAvatar() {
 				uni.chooseImage({

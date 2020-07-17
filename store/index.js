@@ -12,7 +12,7 @@ try {
 }
 
 // 需要本地存储，且下次APP启动需要取出的，在state中的变量名
-let saveStateKeys = ['vuex_user', 'vuex_login_type', 'vuex_photo_request'];
+let saveStateKeys = ['vuex_user', 'vuex_login_type'];
 
 const store = new Vuex.Store({
 	state: {
@@ -20,9 +20,6 @@ const store = new Vuex.Store({
 		// 加上vuex_前缀，是防止变量名冲突，也让人一目了然
 		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {},
 		vuex_login_type: lifeData.vuex_login_type ? lifeData.vuex_login_type : 0,  // 0: 未登录 1: 本站用户登录 2: 三方账号登录
-		vuex_photo_request: lifeData.vuex_photo_request ? lifeData.vuex_photo_request : '',
-		// vuex_access_token: lifeData.vuex_access_token ? lifeData.vuex_access_token : '',
-		// vuex_refresh_token: lifeData.vuex_refresh_token ? lifeData.vuex_refresh_token : '',
 	},
 	mutations: {
 		$uStore(state, payload) {  // payload: {name: '', value: ''}

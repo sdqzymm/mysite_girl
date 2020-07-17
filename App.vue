@@ -9,8 +9,10 @@
 					this.$u.vuex('vuex_login_type', 0);
 				}
 				// 补发上次退出前未发送的必须的请求(如更新用户照片墙)
-				if(lifeData.vuex_photo_request) {
-					this.$u.api.uploadPhoto(lifeData.vuex_photo_request);
+				if(lifeData.vuex_login_type == 1) {
+					if(lifeData.vuex_user.photoRequest){
+						this.$u.api.uploadPhoto(lifeData.vuex_user.photoRequest);
+					}	
 				}
 			} catch (e) {
 

@@ -16,7 +16,7 @@
 		},
 		methods: {
 			test() {
-				this.$u.post('/api/account/v1/test/').then(res=>{
+				this.$u.post('/api/account/v1/blank/').then(res=>{
 					console.log(5);
 					console.log(res);
 				})

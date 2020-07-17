@@ -1,5 +1,7 @@
+import BASE_URL from './base_url.js';
+
 const config = {
-	baseUrl: 'http://192.168.3.20:8000', // 请求的本域名
+	baseUrl: BASE_URL, // 请求的本域名
 	method: 'POST',
 	// 设置为json，返回后会对数据进行一次JSON.parse()
 	dataType: 'json',
@@ -32,7 +34,6 @@ const install = (Vue, vm) => {
 				config.data.auth_type = auth_type;
 				config.data.app_key = app_key;
 				config.data.open_id = open_id;
-				console.log(config);
 			}	
 		} catch (e) {}
 		if (config.url == ''){
@@ -83,7 +84,7 @@ const install = (Vue, vm) => {
 			redirect_url: redirect_url 
 		}).then(res=>{
 			if(res.code!=10400) {
-				toLogin(vm, '需要重新登录，即将跳转登录')
+				toLogin(vm, '需要重新登录，即将跳转登录');
 			}else {
 				// 刷新成功, 更新用户信息, 重新发送请求
 				console.log('刷新成功');

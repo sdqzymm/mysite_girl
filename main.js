@@ -20,10 +20,10 @@ const app = new Vue({
 })
 
 // 等Vue创建对象完成，引入"app"对象(也即页面的"this"实例)之后再配置请求信息，这样在APP.VUE中也能正常发出请求
-import httpInterceptor from '@/common/http.interceptor.js'
+import httpInterceptor from '@/common/api/http.interceptor.js'
 Vue.use(httpInterceptor, app)
 // http接口API集中管理引入部分
-import httpApi from '@/common/http.api.js'
+import httpApi from '@/common/api/http.api.js'
 Vue.use(httpApi, app)
 
 

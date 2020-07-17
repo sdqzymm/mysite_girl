@@ -15,7 +15,6 @@
 		</view> 
 		<!-- 宫格 -->
 		<grid class="grid"></grid>
-
 		<!-- 广告位 -->
 		<view class="ad">广告位</view>
 		<template v-if="vuex_login_type==0">
@@ -29,8 +28,6 @@
 			<u-button @click="tapLogout" type="warning" :custom-style="btnStyle">注销</u-button>
 			<u-button @click="tapReg" type="error" :custom-style="btnStyle">注册</u-button>
 		</template>
-
-		<button @click="test">测试</button>
 	</view>
 </template>
 
@@ -80,10 +77,7 @@
 				this.$u.route({
 					url: '/pages/reg/reg'
 				})
-			},
-			test: debounce(()=>{
-				console.log(5)
-			}, 5000)
+			}
 		}
 	}
 </script>

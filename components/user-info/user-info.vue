@@ -1,7 +1,8 @@
 <template>
 	<view class="user" @tap="handleEdit">
 		<view class="avatar">
-			<u-avatar :src="vuex_user.avatar || '/static/avatar/photo1.jpg'" size="large"></u-avatar>
+			<!-- <u-avatar :src="vuex_user.avatar_ || '/static/avatar/photo1.jpg'" size="large"></u-avatar> -->
+			<view class="avatar-img" :style="[{backgroundImage:vuex_user.avatar_?'url(' + vuex_user.avatar_ + ')':'url(' + '/static/avatar/photo1.jpg' + ')'}]"></view>
 			<view class="iconfont" :class="[vuex_user.gender ? 'icon-nan' : 'icon-nv']"></view>
 		</view> 
 		<view class="info">
@@ -82,5 +83,13 @@
 	}
 	.icon-nv{
 		background-color: rgb(255, 66, 148);
+	}
+	
+	.avatar-img {
+		width: 120rpx;
+		height: 120rpx;
+		background-size: cover;
+		background-position: center;
+		border-radius: 50%;
 	}
 </style>
