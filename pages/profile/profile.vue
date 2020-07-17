@@ -1,4 +1,4 @@
-<template>
+<template>  
 	<view class="profile">
 		<!-- 照片墙 -->
 		<photo-wall></photo-wall>
